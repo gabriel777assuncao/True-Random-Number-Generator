@@ -54,7 +54,8 @@ export class Random implements INodeType
 
 		const httpClient: HttpClient = {
 			getText: async (url, qs, timeoutMs = 10_000) =>
-				(await this.helpers.httpRequest({
+				(
+                    await this.helpers.httpRequest({
 					url,
 					method: 'GET',
 					json: false,
@@ -62,7 +63,8 @@ export class Random implements INodeType
 					headers: { Accept: 'text/plain' },
 					qs,
 					timeout: timeoutMs,
-				})) as string,
+				}),
+            ) as string,
 		};
 
 		const rng = new RandomOrgClient(httpClient);
@@ -73,21 +75,18 @@ export class Random implements INodeType
 					const min = this.getNodeParameter('min', i) as number;
 					const max = this.getNodeParameter('max', i) as number;
 
-					try {
-						assertNumber('Min', min);
-						assertNumber('Max', max);
-						assertInteger('Min', min);
-						assertInteger('Max', max);
-						assertMinLEMax(min, max);
-					} catch (e: any) {
-						throw new NodeOperationError(this.getNode(), e.message, { itemIndex: i });
-					}
+					assertNumber('Min', min);
+					assertNumber('Max', max);
+					assertInteger('Min', min);
+					assertInteger('Max', max);
+					assertMinLEMax(min, max);
 
 					const value = await rng.getInteger(min, max);
 
 					return { json: { value, min, max, source: 'random.org' } };
                 } catch (error: unknown) {
                     if (error instanceof NodeOperationError) throw error;
+
                     throw new NodeApiError(this.getNode(), {
                         message: 'Failed to fetch a number from Random.org',
                         error: error instanceof Error ? error.message : 'Unknown error',
@@ -95,6 +94,7 @@ export class Random implements INodeType
                     });
                 }
 			})();
+
 			promises.push(p);
 		});
 
