@@ -15,8 +15,10 @@
   "author": "Gabriel Assunção <gabrielassuncaocosta2@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.6.3",
-    "@types/node": "^20.14.9"
+    "@types/node": "^20.19.17",
+    "n8n-core": "^1.17.0",
+    "n8n-workflow": "^1.17.0",
+    "typescript": "^5.9.2"
   },
   "n8n": {
     "nodes": [
