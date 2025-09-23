@@ -7,16 +7,16 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { HttpClient } from './lib/HttpClient';
-import { RandomOrgClient } from './lib/RandomOrgClient';
-import { assertNumber, assertInteger, assertMinLEMax } from './lib/Validation';
-import { ValidationError } from './lib/Errors';
+import { IHttpClient } from './core/interfaces/IHttpClient';
+import { RandomOrgClient } from './core/services/RandomOrgClient';
+import { assertNumber, assertInteger, assertMinLEMax } from './core/exceptions/Validation';
+import { ValidationError } from './core/exceptions/Errors';
 
 export class Random implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Random',
 		name: 'random',
-		icon: 'file:random.svg',
+		icon: 'file:assets/random.svg',
 		group: ['transform'],
 		version: 1,
 		description: 'True Random Number Generator (Random.org)',
@@ -52,7 +52,7 @@ export class Random implements INodeType {
 		const inputItems: INodeExecutionData[] = this.getInputData();
 		const outputPromises: Array<Promise<INodeExecutionData>> = [];
 
-		const httpClient: HttpClient = {
+		const httpClient: IHttpClient = {
 			getText: async (
 				url: string,
 				queryStringParams?: Record<string, string | number>,

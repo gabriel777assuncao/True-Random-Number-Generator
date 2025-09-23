@@ -1,10 +1,10 @@
-import { HttpClient } from './HttpClient';
+import { IHttpClient } from '../interfaces/IHttpClient';
 
 export class RandomOrgClient {
 	constructor(
-		private readonly http: HttpClient,
+		private readonly http: IHttpClient,
 		private readonly baseUrl = 'https://www.random.org/integers/',
-	) {}
+	) { }
 
 	async getInteger(min: number, max: number, timeoutMs = 10_000): Promise<number> {
 		const body = await this.http.getText(this.baseUrl, {

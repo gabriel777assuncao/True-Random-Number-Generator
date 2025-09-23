@@ -1,17 +1,17 @@
-import { Random } from '../src/Random.node';
-import { NodeOperationError, NodeApiError, INodeExecutionData } from 'n8n-workflow';
+import { Random } from "../src/Random.node";
+import {
+    NodeOperationError,
+    NodeApiError,
+    INodeExecutionData,
+} from "n8n-workflow";
 
-describe('Random node (TRNG via Random.org)', () => {
+describe("Random node (TRNG via Random.org)", () => {
     const makeContext = (options?: {
         min?: number;
         max?: number;
         httpResponse?: string | Error;
     }) => {
-        const {
-            min = 1,
-            max = 10,
-            httpResponse = '7\n',
-        } = options ?? {};
+        const { min = 1, max = 10, httpResponse = "7\n" } = options ?? {};
 
         const httpRequest = jest.fn().mockImplementation(async () => {
             if (httpResponse instanceof Error) throw httpResponse;
@@ -21,20 +21,24 @@ describe('Random node (TRNG via Random.org)', () => {
         const context: any = {
             getInputData: (): INodeExecutionData[] => [{ json: {} }],
             getNodeParameter: (name: string, _itemIndex: number) => {
-                if (name === 'min') return min;
-                if (name === 'max') return max;
+                if (name === "min") return min;
+                if (name === "max") return max;
                 return undefined;
             },
-            getNode: () => ({ name: 'Random' }),
+            getNode: () => ({ name: "Random" }),
             helpers: { httpRequest },
         };
 
         return { context, httpRequest };
     };
 
-    test('should return a valid integer within the specified range', async () => {
+    test("should return a valid integer within the specified range", async () => {
         const node = new Random();
-        const { context, httpRequest } = makeContext({ min: 1, max: 10, httpResponse: '7\n' });
+        const { context, httpRequest } = makeContext({
+            min: 1,
+            max: 10,
+            httpResponse: "7\n",
+        });
         const [result] = await node.execute.call(context);
 
         expect(httpRequest).toHaveBeenCalledTimes(1);
@@ -45,24 +49,32 @@ describe('Random node (TRNG via Random.org)', () => {
             value: 7,
             min: 1,
             max: 10,
-            source: 'random.org',
+            source: "random.org",
         });
         expect(Number.isInteger(item.value)).toBe(true);
         expect(item.value).toBeGreaterThanOrEqual(1);
         expect(item.value).toBeLessThanOrEqual(10);
     });
 
-    test('should throw NodeOperationError when Min or Max are strings', async () => {
+    test("should throw NodeOperationError when Min or Max are strings", async () => {
         const node = new Random();
         const { context } = makeContext({ min: "a" as any, max: 10 });
 
-        await expect(node.execute.call(context)).rejects.toBeInstanceOf(NodeOperationError);
+        await expect(node.execute.call(context)).rejects.toBeInstanceOf(
+            NodeOperationError
+        );
     });
 
-    test('should throw NodeApiError when Random.org request fails', async () => {
+    test("should throw NodeApiError when Random.org request fails", async () => {
         const node = new Random();
-        const { context } = makeContext({ min: 1, max: 10, httpResponse: new Error('network down') });
+        const { context } = makeContext({
+            min: 1,
+            max: 10,
+            httpResponse: new Error("network down"),
+        });
 
-        await expect(node.execute.call(context)).rejects.toBeInstanceOf(NodeApiError);
+        await expect(node.execute.call(context)).rejects.toBeInstanceOf(
+            NodeApiError
+        );
     });
 });
