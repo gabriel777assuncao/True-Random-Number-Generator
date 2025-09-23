@@ -11,8 +11,7 @@ import { HttpClient } from './lib/HttpClient';
 import { RandomOrgClient } from './lib/RandomOrgClient';
 import { assertNumber, assertInteger, assertMinLEMax } from './lib/Validation';
 
-export class Random implements INodeType
-{
+export class Random implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Random',
 		name: 'random',
@@ -49,57 +48,58 @@ export class Random implements INodeType
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const items: INodeExecutionData[] = this.getInputData();
-		const promises: Array<Promise<INodeExecutionData>> = [];
+		const inputItems: INodeExecutionData[] = this.getInputData();
+		const outputPromises: Array<Promise<INodeExecutionData>> = [];
 
 		const httpClient: HttpClient = {
-			getText: async (url, qs, timeoutMs = 10_000) =>
-				(
-                    await this.helpers.httpRequest({
+			getText: async (
+				url: string,
+				queryStringParams?: Record<string, string | number>,
+				timeoutMilliseconds = 10_000,
+			) =>
+				(await this.helpers.httpRequest({
 					url,
 					method: 'GET',
 					json: false,
 					encoding: 'text',
 					headers: { Accept: 'text/plain' },
-					qs,
-					timeout: timeoutMs,
-				}),
-            ) as string,
+					qs: queryStringParams,
+					timeout: timeoutMilliseconds,
+				})) as string,
 		};
 
-		const rng = new RandomOrgClient(httpClient);
+		const randomOrgClient = new RandomOrgClient(httpClient);
 
-		items.forEach((item: INodeExecutionData, i: number) => {
-			const p = (async (): Promise<INodeExecutionData> => {
+		inputItems.forEach((_unusedItem: INodeExecutionData, itemIndex: number) => {
+			const promise = (async (): Promise<INodeExecutionData> => {
 				try {
-					const min = this.getNodeParameter('min', i) as number;
-					const max = this.getNodeParameter('max', i) as number;
+					const minimum = this.getNodeParameter('min', itemIndex) as number;
+					const maximum = this.getNodeParameter('max', itemIndex) as number;
 
-					assertNumber('Min', min);
-					assertNumber('Max', max);
-					assertInteger('Min', min);
-					assertInteger('Max', max);
-					assertMinLEMax(min, max);
+					assertNumber('Min', minimum);
+					assertNumber('Max', maximum);
+					assertInteger('Min', minimum);
+					assertInteger('Max', maximum);
+					assertMinLEMax(minimum, maximum);
 
-					const value = await rng.getInteger(min, max);
+					const randomValue = await randomOrgClient.getInteger(minimum, maximum);
 
-					return { json: { value, min, max, source: 'random.org' } };
-                } catch (error: unknown) {
-                    if (error instanceof NodeOperationError) throw error;
+					return { json: { value: randomValue, min: minimum, max: maximum, source: 'random.org' } };
+				} catch (caughtError: unknown) {
+					if (caughtError instanceof NodeOperationError) throw caughtError;
 
-                    throw new NodeApiError(this.getNode(), {
-                        message: 'Failed to fetch a number from Random.org',
-                        error: error instanceof Error ? error.message : 'Unknown error',
-                        itemIndex: i,
-                    });
-                }
+					throw new NodeApiError(this.getNode(), {
+						message: 'Failed to fetch a number from Random.org',
+						error: caughtError instanceof Error ? caughtError.message : 'Unknown error',
+						itemIndex,
+					});
+				}
 			})();
 
-			promises.push(p);
+			outputPromises.push(promise);
 		});
 
-		const results = await Promise.all(promises);
-
+		const results = await Promise.all(outputPromises);
 		return [results];
 	}
 }

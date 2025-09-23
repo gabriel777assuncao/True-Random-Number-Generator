@@ -1,11 +1,11 @@
-export function assertNumber(name: string, v: unknown) {
-	if (typeof v !== 'number' || !Number.isFinite(v)) {
+export function assertNumber(name: string, value: unknown) {
+	if (typeof value !== 'number' || !Number.isFinite(value)) {
 		throw new Error(`${name} must be a valid number.`);
 	}
 }
 
-export function assertInteger(name: string, v: number) {
-	if (!Number.isInteger(v)) {
+export function assertInteger(name: string, value: number) {
+	if (!Number.isInteger(value)) {
 		throw new Error(`${name} must be an integer.`);
 	}
 }

@@ -1,3 +1,7 @@
 export interface HttpClient {
-	getText(url: string, qs?: Record<string, string | number>, timeoutMs?: number): Promise<string>;
+	getText(
+		url: string,
+		queryParameters?: Record<string, string | number>,
+		timeoutMilliseconds?: number,
+	): Promise<string>;
 }

@@ -18,9 +18,11 @@ export class RandomOrgClient {
 		}, timeoutMs);
 
 		const value = parseInt(body.trim(), 10);
+
 		if (!Number.isFinite(value)) {
 			throw new Error(`Unexpected Random.org response: "${body}"`);
 		}
+
 		return value;
 	}
 }
