@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && cp src/random.svg dist/random.svg",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "test": "jest"
   },
   "keywords": [
     "n8n",
@@ -15,9 +16,12 @@
   "author": "Gabriel Assunção <gabrielassuncaocosta2@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.19.17",
+    "jest": "^30.1.3",
     "n8n-core": "^1.17.0",
     "n8n-workflow": "^1.17.0",
+    "ts-jest": "^29.4.4",
     "typescript": "^5.9.2"
   },
   "n8n": {
