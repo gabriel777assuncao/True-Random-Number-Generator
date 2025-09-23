@@ -40,7 +40,7 @@ services:
 
     volumes:
       - n8n_data:/home/node/.n8n
-      - ./src:/home/node/.n8n/custom
+      - ./node:/home/node/.n8n/custom/n8n-nodes-random
 
 volumes:
   n8n_data:
