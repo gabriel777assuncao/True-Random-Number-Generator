@@ -44,16 +44,6 @@ Na raiz do projeto (onde está o `docker-compose.yaml`):
 
 ```bash
 docker compose up -d
-```
-
-> O container do **n8n** monta automaticamente a pasta `n8n-nodes-random/dist` dentro de `.n8n/custom`, deixando o node disponível no editor.
-
-### 5. Reinicie o n8n para aplicar as mudanças
-
-```bash
-docker compose restart n8n
-```
-
 ---
 
 ## 🧩 Uso no n8n
