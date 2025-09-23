@@ -1,17 +1,19 @@
-export function assertNumber(name: string, value: unknown) {
+import { ValidationError } from './Errors';
+
+export function assertNumber(name: string, value: unknown): asserts value is number {
 	if (typeof value !== 'number' || !Number.isFinite(value)) {
-		throw new Error(`${name} must be a valid number.`);
+		throw new ValidationError(`${name} must be a valid number.`);
 	}
 }
 
-export function assertInteger(name: string, value: number) {
+export function assertInteger(name: string, value: number): void {
 	if (!Number.isInteger(value)) {
-		throw new Error(`${name} must be an integer.`);
+		throw new ValidationError(`${name} must be an integer.`);
 	}
 }
 
-export function assertMinLEMax(min: number, max: number) {
+export function assertMinLEMax(min: number, max: number): void {
 	if (min > max) {
-		throw new Error('Min cannot be greater than Max.');
+		throw new ValidationError('Min cannot be greater than Max.');
 	}
 }

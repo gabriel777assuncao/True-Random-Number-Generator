@@ -52,6 +52,13 @@ describe('Random node (TRNG via Random.org)', () => {
         expect(item.value).toBeLessThanOrEqual(10);
     });
 
+    test('should throw NodeOperationError when Min or Max are strings', async () => {
+        const node = new Random();
+        const { context } = makeContext({ min: "a" as any, max: 10 });
+
+        await expect(node.execute.call(context)).rejects.toBeInstanceOf(NodeOperationError);
+    });
+
     test('should throw NodeApiError when Random.org request fails', async () => {
         const node = new Random();
         const { context } = makeContext({ min: 1, max: 10, httpResponse: new Error('network down') });

@@ -10,6 +10,7 @@ import {
 import { HttpClient } from './lib/HttpClient';
 import { RandomOrgClient } from './lib/RandomOrgClient';
 import { assertNumber, assertInteger, assertMinLEMax } from './lib/Validation';
+import { ValidationError } from './lib/Errors';
 
 export class Random implements INodeType {
 	description: INodeTypeDescription = {
@@ -87,6 +88,10 @@ export class Random implements INodeType {
 					return { json: { value: randomValue, min: minimum, max: maximum, source: 'random.org' } };
 				} catch (caughtError: unknown) {
 					if (caughtError instanceof NodeOperationError) throw caughtError;
+
+					if (caughtError instanceof ValidationError) {
+						throw new NodeOperationError(this.getNode(), caughtError.message, { itemIndex });
+					}
 
 					throw new NodeApiError(this.getNode(), {
 						message: 'Failed to fetch a number from Random.org',
