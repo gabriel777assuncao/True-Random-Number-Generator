@@ -1,7 +1,3 @@
-Boa! Aqui está o mesmo `README.md`, mas todo em **português**, mantendo clareza e organização:
-
----
-
 # 🎲 n8n-nodes-random
 
 **Gerador de Números Aleatórios Verdadeiros para n8n** — um node customizado que utiliza a [Random.org](https://www.random.org/) para gerar inteiros verdadeiramente aleatórios entre um valor mínimo e máximo.
