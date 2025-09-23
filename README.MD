@@ -45,6 +45,7 @@ Na raiz do projeto (onde está o `docker-compose.yaml`):
 ```bash
 ---
 docker compose up -d
+docker compose restart n8n
 ---
 
 ## 🧩 Uso no n8n
