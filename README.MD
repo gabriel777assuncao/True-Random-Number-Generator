@@ -43,6 +43,7 @@ Isso vai gerar os arquivos em `dist/` e copiar o ícone SVG.
 Na raiz do projeto (onde está o `docker-compose.yaml`):
 
 ```bash
+---
 docker compose up -d
 ---
 
