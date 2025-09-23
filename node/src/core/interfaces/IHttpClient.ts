@@ -1,4 +1,4 @@
-export interface HttpClient {
+export interface IHttpClient {
 	getText(
 		url: string,
 		queryParameters?: Record<string, string | number>,
