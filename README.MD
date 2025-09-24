@@ -83,6 +83,7 @@ docker compose restart n8n
 Utilizamos **Jest** para testes unitários.
 
 ```bash
+cd src
 npm test
 ```
 
