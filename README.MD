@@ -99,19 +99,33 @@ PASS  tests/Random.node.test.ts
 ## 📂 Estrutura do projeto
 
 ```
-n8n-nodes-random/
+True-Random-Number-Generator/
 ├── docker-compose.yaml
-├── src/
-│   └── n8n-nodes-random/
-│       ├── src/
-│       │   ├── Random.node.ts      # Implementação do Node
-│       │   └── lib/                # Http client, validação, cliente Random.org
-│       ├── dist/                   # Código compilado
-│       ├── package.json
-│       └── tsconfig.json
-├── tests/                          # Testes Jest
-│   └── Random.node.test.ts
-└── README.md
+├── .env.example                  # exemplo de variáveis
+├── .env                          # (gitignored)
+├── README.md
+├── image.png                     # screenshot do node
+└── node/                         # pacote do custom node (n8n-nodes-random)
+    ├── package.json
+    ├── tsconfig.json
+    ├── jest.config.js
+    ├── dist/                     # build gerado pelo TypeScript
+    ├── src/
+    │   ├── Random.node.ts        # implementação do Node
+    │   ├── assets/
+    │   │   └── random.svg        # ícone do node (copiado no build)
+    │   ├── core/
+    │   │   ├── exceptions/
+    │   │   │   └── ValidationError.ts
+    |   |   |   └── Errors.ts
+    |   |   |    
+    │   │   ├── interfaces/
+    │   │   │   └── IHttpClient.ts
+    │   │   └── services/
+    │   │       └── RandomOrgClient.ts
+    │ 
+    └── tests/                    # testes Jest
+        └── Random.node.test.ts
 ```
 
 ---
