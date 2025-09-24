@@ -21,7 +21,6 @@
 
 ```bash
 git clone git@github.com:gabriel777assuncao/True-Random-Number-Generator.git
-cd True-Random-Number-Generator/n8n-nodes-random
 ```
 
 ### 2. Configure o .env
