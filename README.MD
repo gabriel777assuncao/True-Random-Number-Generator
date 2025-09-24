@@ -1,6 +1,6 @@
 # 🎲 n8n-nodes-random
 
-**Gerador de Números Aleatórios Verdadeiros para n8n** — um node customizado que utiliza a [Random.org](https://www.random.org/) para gerar inteiros verdadeiramente aleatórios entre um valor mínimo e máximo.**
+**Gerador de Números Aleatórios Verdadeiros para n8n** — um node customizado que utiliza a [Random.org](https://www.random.org/) para gerar inteiros verdadeiramente aleatórios entre um valor mínimo e máximo.
 ---
 
 ## 📦 Funcionalidades
