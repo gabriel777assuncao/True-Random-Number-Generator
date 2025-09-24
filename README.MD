@@ -21,6 +21,7 @@
 
 ```bash
 git clone git@github.com:gabriel777assuncao/True-Random-Number-Generator.git
+cd True-Random-Number-Generator
 ```
 
 ### 2. Configure o .env
@@ -34,6 +35,7 @@ cp .env.example .env
 ### 3. Instale as dependências
 
 ```bash
+cd node
 npm install
 ```
 
