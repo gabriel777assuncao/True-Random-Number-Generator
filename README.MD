@@ -24,13 +24,21 @@ git clone git@github.com:gabriel777assuncao/True-Random-Number-Generator.git
 cd True-Random-Number-Generator/n8n-nodes-random
 ```
 
-### 2. Instale as dependências
+### 2. Configure o .env
+
+Copie o arquivo de exemplo e ajuste as variáveis conforme necessário:
+
+```bash
+cp .env.example .env
+```
+
+### 3. Instale as dependências
 
 ```bash
 npm install
 ```
 
-### 3. Compile o node
+### 4. Compile o node
 
 ```bash
 npm run build
@@ -38,7 +46,7 @@ npm run build
 
 Isso vai gerar os arquivos em `dist/` e copiar o ícone SVG.
 
-### 4. Suba a infraestrutura do n8n com Docker
+### 5. Suba a infraestrutura do n8n com Docker
 
 Na raiz do projeto (onde está o `docker-compose.yaml`):
 
