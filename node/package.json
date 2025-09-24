@@ -4,7 +4,7 @@
   "description": "Random.org True Random Number Generator node for n8n",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && cp src/assets/random.svg dist/assets/random.svg",
+    "build": "tsc && mkdir -p dist/assets && cp src/assets/random.svg dist/assets/random.svg",
     "dev": "tsc --watch",
     "test": "jest"
   },
